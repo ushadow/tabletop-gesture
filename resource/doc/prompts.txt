@@ -1,0 +1,13 @@
+Waiting for reports ...
+Report: There is a big explosion at the chemical plant at the intersection of Commercial Street and 29th Street. 
+Task: Locate the chemical plant on the map. 
+Task: Get an angled view of the chemical plant area. 
+Task: Zoom in and take a look around the surroundings at different angles.
+Task: Zoom out and get back to the view looking straight down.
+Report: The liquid chemicals are flowing steadily towards the surrounding residential areas. Radius of about 3 street blocks from the chemical plant is considered at high risk.
+Task: Indicate this high risk zone surrounding the chemical plant on the map.
+Report: Local hospitals and shelter facilities need to be informed about the incident.
+Task: Indicate two hospitals closest to the chemical plant.
+Report: The leaked toxic chemicals from the explosion cannot be prevented from moving into the residential area. People need to be evacuated promptly.
+Task: Work out some routes for evacuating people to the nearest shelters. Watch out for blocked roads due to damaged.
+Done. Thank you!

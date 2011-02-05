@@ -1,0 +1,141 @@
+<html>
+	<head>
+		<title>Google</title>
+		<!-- *** Replace the key below below with your own API key, available at http://code.google.com/apis/maps/signup.html *** -->
+		<script type = "text/javascript" src = "http://www.google.com/jsapi?key=ABQIAAAABvYEvTwPmtkxkpaFiESXhhSrP0TwWnBgNonJIkQtFbD9dFmIqhQ4fYG_4cPjfhbIZW2qLHAV-h9seA"></script>
+		<script type = "text/javascript" src = "script/js/lib/keyboard-focus-hack.js"></script>
+		<script type = "text/javascript" src = "script/js/lib/math3d.js"></script>
+		<script type = "text/javascript">
+
+			google.load("earth", "1");
+			google.load("maps", "2.99");  // For JS geocoder
+
+			var ge = null;
+			var geocoder;
+			var currentPos = [0, 0, 100];
+
+			function init() {
+				google.earth.setLanguage('en');
+				google.earth.createInstance("map3d", initCallback, failureCallback);
+
+				setTimeout("submitLocation('san francisco')", 8000);	
+			}
+
+			function initCallback(object) {
+				ge = object;
+				ge.getWindow().setVisibility(true);
+				var cam = ge.getView().copyAsCamera(ge.ALTITUDE_ABSOLUTE);
+				cam.setAltitude(12000000);
+				ge.getView().setAbstractView(cam);
+				ge.getNavigationControl().setVisibility(ge.VISIBILITY_SHOW);
+
+				// add some layers
+				ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true);
+				ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true);
+				//document.getElementById('geplugin_version').innerHTML = ge.getPluginVersion();
+				//keyboardFocusHack(ge);
+			}
+
+			function failureCallback(object) {
+			}
+
+			function submitLocation(address) {
+				geocoder = new google.maps.ClientGeocoder();
+				geocoder.getLatLng(
+					address, 
+					function(point) {
+						if (point && ge != null) {
+							var la = ge.createLookAt('');     
+							la.set(point.y, point.x, 100, ge.ALTITUDE_RELATIVE_TO_GROUND, 
+								0, 0, 4000);
+							ge.getView().setAbstractView(la);
+							currentPos[1] = point.x;
+							currentPos[0] = point.y;
+						}
+					}
+				)
+			}
+
+			//Requires: Theta is angle between the direction vector and east vector in the local frame
+			//				length is normalized length [0,1]
+			function panBy(cosTheta, sinTheta, length) {
+				var lookAt = ge.createLookAt('');
+//				var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+//				var currentPos = new Array();
+//				currentPos[0] = lookAt.getLatitude();
+//				currentPos[1] = lookAt.getLongitude();
+//				currentPos[2] = lookAt.getAltitude();
+				var currentPosCartesian = V3.latLonAltToCartesian(currentPos);
+				//localToGlobalFrame = [east, north, vertical]
+				var localToGlobalFrame = M33.makeLocalToGlobalFrame(currentPos);
+				var panVec = V3.add(V3.scale(localToGlobalFrame[0], cosTheta), V3.scale(localToGlobalFrame[1], sinTheta));
+				var globeBounds = ge.getView().getViewportGlobeBounds();
+				var east = globeBounds.getEast();
+				var west = globeBounds.getWest();
+				var distance = length * (currentPos[2] + V3.EARTH_RADIUS)  * (east - west) * Math.PI / 180;
+				panVec = V3.scale(panVec, distance);	
+				currentPosCartesian = V3.add(currentPosCartesian, panVec);
+				currentPos = V3.cartesianToLatLonAlt(currentPosCartesian);	
+				
+				if (currentPos[0] < -90)
+					currentPos[0] = -90;
+				else if (currentPos[0] > 90)
+					currentPos[0] = 90;
+					
+				if (currentPos[1] < -180)
+					currentPos[1] = -180;
+				else if (currentPos[1] > 180)
+					currentPos[1] = 180; 
+				
+				lookAt.set(currentPos[0], currentPos[1], currentPos[2], ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 4000);
+				ge.getView().setAbstractView(lookAt);
+
+			}
+			
+			function tiltBy(delta) {
+				var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+
+				tiltAngle = lookAt.getTilt() + delta;
+				
+				if (tiltAngle < 0)
+					tiltAngle = 0;
+				else if (tiltAngle > 90)
+					titleAngle = 90; 
+
+				//tilt angle: angle between the direction of the LookAt position and the normal to the surface of the earth. Values range from 0 to 90 degrees. Values
+				//for tilt cannot be negative. A tilt value of 0 degree indicate viewing from directly above. A tilt value of 90 degree indicates viewing along the horizon.
+				lookAt.setTilt(tiltAngle);
+
+				ge.getView().setAbstractView(lookAt);
+			}
+
+			function rotateBy(delta) {
+				var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+				rotAngle = lookAt.getHeading() + delta;
+				rotAngle = rotAngle % 360;
+				
+				lookAt.setHeading(rotAngle);
+
+				ge.getView().setAbstractView(lookAt);
+			}
+			
+			function zoomBy(delta) {
+				var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+				distance = lookAt.getRange() + delta;
+				lookAt.setRange(distance);
+				ge.getView().setAbstractView(lookAt);
+			}
+
+		</script>
+	</head>
+	<body onload = 'init()' id = 'body'>
+		<div>
+			<form name = 'searchform' id = 'searchform' action = "javascript:submitLocation(document.getElementById('address').value); void(0);">
+				<input type = 'text' size = 60 id = 'address'></input>
+				<input type = 'submit' value = 'Go to location'>
+			</form>
+		</div>
+
+		<div id = 'map3d' style='height: 100%;'></div>
+	</body>
+</html>

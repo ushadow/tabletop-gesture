@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/WebCam"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
+	<classpathentry kind="lib" path="/Common/lib/vecmath.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ColorCalib"/>
+	<classpathentry kind="lib" path="/Common/lib/jogl.jar" sourcepath="C:/Dev/Common/lib/jogl-src.zip">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Dev/Common/lib/jogl-1.1.0-src.zip!/jogl/src/classes"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Common/lib/colt.jar" sourcepath="/Common/lib/colt.src.zip"/>
+	<classpathentry kind="lib" path="lib/jbullet-all.jar"/>
+	<classpathentry kind="lib" path="lib/jdic_stub_windows.jar"/>
+	<classpathentry kind="lib" path="lib/jdic.jar"/>
+	<classpathentry kind="lib" path="/WebCam/lib/customizer.jar"/>
+	<classpathentry kind="lib" path="/WebCam/lib/jmf.jar"/>
+	<classpathentry kind="lib" path="/WebCam/lib/jmf.properties"/>
+	<classpathentry kind="lib" path="/WebCam/lib/mediaplayer.jar"/>
+	<classpathentry kind="lib" path="/WebCam/lib/multiplayer.jar"/>
+	<classpathentry kind="lib" path="/WebCam/lib/sound.jar"/>
+	<classpathentry kind="lib" path="/WebCam/lib/soundbank.gm"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/YYUtils"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/RobHandTrackingPro"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/RobSkinning"/>
+	<classpathentry kind="lib" path="/RobHandTrackingPro/lib/jmatio.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
