@@ -1,14 +1,14 @@
 %[params error] = colorCalibAll(dir, method)
 function [params error] = colorCalibAll(dir, method)
 
-	indices = regexp(dir,'[/\\]');
-	parentDir = dir(1:indices(end-1));
+	indices = regexp(dir, '[/\\]');
+	parentDir = dir(1 : indices(end - 1));
 
 	filePrefix = [dir 'colorPalette'];
 
-	camera = cell(4,1);
+	camera = cell(4, 1);
 
-	for i = 1:4,
+	for i = 1 : 4,
 			camera{i} = load([filePrefix int2str(i) '.txt']);
 	end
 
@@ -16,7 +16,7 @@ function [params error] = colorCalibAll(dir, method)
 	proj = load([parentDir 'colorPalette.txt']);
 
 	%each row is an input
-	camAve = (camera{1} + camera{2} + camera{3} + camera{4})/4;
+	camAve = (camera{1} + camera{2} + camera{3} + camera{4}) / 4;
 
 	close all;
 	hold('on');
@@ -48,19 +48,18 @@ function [M error] = calibLinear(indep, dep)
 	calibDisplay(indep, dep, transformed');
 
 	%transformed has data points as column vectors
-	error = sum((transformed' - dep).^2);
+	error = sum((transformed' - dep) .^ 2);
 end
 
 function [alpha error] = calibReg(indep, dep, kernel, lambda)
-
 	T = size(indep, 1);
 	alpha = zeros(T, 3);
 	
 	for i = 1 : 3,
-		alpha(:, i) = regularizedLSRegression(indep, dep(:, i),kernel, lambda);
+		alpha(:, i) = regularizedLSRegression(indep, dep(:, i), kernel, lambda);
 	end
-	K=feval(kernel, indep, indep);
-	transformed = K*alpha ./ lambda;
+	K = feval(kernel, indep, indep);
+	transformed = K * alpha ./ lambda;
 	calibDisplay(indep, dep, transformed);
 	error = sum((transformed - dep) .^ 2);
 end
@@ -69,9 +68,9 @@ end
 %		indep, dep, transformed = each row is an input
 function calibDisplay(indep, dep, transformed)
 
-	plot3(indep(:,1),indep(:,2),indep(:,3),'.');
-	plot3(dep(:,1), dep(:,2), dep(:,3), 'r.');
-	plot3(transformed(:,1), transformed(:,2), transformed(:,3), 'g.');
+	plot3(indep(:, 1),indep(:, 2),indep(:, 3), '.');
+	plot3(dep(:, 1), dep(:, 2), dep(:, 3), 'r.');
+	plot3(transformed(:, 1), transformed(:, 2), transformed(:, 3), 'g.');
 	xlabel('R');
 	ylabel('G');
 	zlabel('B');
