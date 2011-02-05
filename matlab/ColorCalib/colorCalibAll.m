@@ -32,11 +32,11 @@ function [params error] = colorCalibAll(dir, method)
 		case 'NL'
 			[params.a error] = colorCalibNL(dir);
 		case 'Reg'
-			
 			params.X = proj;
 			params.lambda = 1;
 			params.kernel = @K2;
-			[params.alpha error] = calibReg(proj, camAve, params.kernel, params.lambda);
+			[params.alpha error] = calibReg(proj, camAve, params.kernel, ...
+                                      params.lambda);
 	end
 
 end
@@ -53,16 +53,16 @@ end
 
 function [alpha error] = calibReg(indep, dep, kernel, lambda)
 
-	T = size(indep,1);
-	alpha = zeros(T,3);
+	T = size(indep, 1);
+	alpha = zeros(T, 3);
 	
-	for i = 1:3,
-		alpha(:,i) = regularizedLSRegression(indep,dep(:,i),kernel, lambda);
+	for i = 1 : 3,
+		alpha(:, i) = regularizedLSRegression(indep, dep(:, i),kernel, lambda);
 	end
 	K=feval(kernel, indep, indep);
-	transformed = K*alpha./lambda;
-	calibDisplay(indep, dep,transformed);
-	error = sum((transformed - dep).^2);
+	transformed = K*alpha ./ lambda;
+	calibDisplay(indep, dep, transformed);
+	error = sum((transformed - dep) .^ 2);
 end
 
 % inputs:
