@@ -12,11 +12,11 @@ import java.nio.IntBuffer;
 import rywang.image.FilterImage.ImageComponent;
 import rywang.util.DirectBufferUtils;
 import webcam.PointGreyDragonflyDriver;
-import yingyin.webcam.IWebcamDriver;
-import yingyin.webcam.WebcamDriverFirei;
-import yingyin.webcam.WebcamDriverJmf;
 
 import edu.mit.yingyin.tabletop.handtracking.LowLatencyPCUtility.CameraInterface;;
+import edu.mit.yingyin.webcam.IWebcamDriver;
+import edu.mit.yingyin.webcam.WebcamDriverFirei;
+import edu.mit.yingyin.webcam.WebcamDriverJmf;
 
 public class Webcam implements CameraInterface {
 

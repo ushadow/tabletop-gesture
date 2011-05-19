@@ -20,7 +20,7 @@ import com.jmatio.types.MLChar;
 import com.jmatio.types.MLDouble;
 import com.jmatio.types.MLStructure;
 
-import edu.mit.yingyin.utils.QuatUtil;
+import edu.mit.yingyin.util.QuatUtil;
 
 public class HMMRecognizer extends GestureRecognizer {
 

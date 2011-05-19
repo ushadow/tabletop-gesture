@@ -3,7 +3,7 @@ package edu.mit.yingyin.tabletop.recognition;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Tuple3f;
 
-import edu.mit.yingyin.utils.QuatUtil;
+import edu.mit.yingyin.util.QuatUtil;
 
 import skinning.SkeletonState;
 

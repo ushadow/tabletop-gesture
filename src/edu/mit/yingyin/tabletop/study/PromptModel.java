@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.mit.yingyin.utils.SimpleAudioPlayer;
+import edu.mit.yingyin.util.SimpleAudioPlayer;
 
 public class PromptModel {
 	private static final String SOUND_FILE_NAME = "resource/audio/IM08.wav";

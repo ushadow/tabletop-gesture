@@ -27,10 +27,10 @@ import javax.swing.JFrame;
 
 import rywang.image.FilterImage.ImageComponent;
 import rywang.util.awt.WindowUtils;
-import yingyin.webcam.WebcamDriverFirei;
-import yingyin.webcam.ControlDialog;
+import yingyin.webcam.gui.ControlDialog;
 import yingyin.preprocess.PreProcess;
 import corejava.PrintfFormat;
+import edu.mit.yingyin.camera.CameraDriverFirei;
 import edu.mit.yingyin.tabletop.environment.EnvConstants;
 import edu.mit.yingyin.tabletop.environment.LeftGloveColorCalibrationExample;
 import edu.mit.yingyin.tabletop.environment.StandardEnvironment;
@@ -239,7 +239,7 @@ public class ColorClassificationMultithread extends KeyAdapter {
 	    case POINT_GREY:
 	    	break;
 	    case FIREI:
-	    	ControlDialog cd = new ControlDialog((WebcamDriverFirei)camera.getDriver());
+	    	ControlDialog cd = new ControlDialog((CameraDriverFirei)camera.getDriver());
 	    	cd.showUI();
 	    	break;
     }

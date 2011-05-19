@@ -11,7 +11,7 @@ import javax.vecmath.Tuple3f;
 import javax.vecmath.Vector3f;
 
 import edu.mit.yingyin.tabletop.environment.EnvConstants;
-import edu.mit.yingyin.utils.QuatUtil;
+import edu.mit.yingyin.util.QuatUtil;
 
 import rywang.util.ObjectIO;
 import skinning.SkeletonState;
